@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Student_Mangement1</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Bussiness Layer\StudentManagement.Services.csproj" />
+    <ProjectReference Include="..\Data Layer\StudentManagement.Data.csproj" />
+    <ProjectReference Include="..\model\StudentMangement.Models.csproj" />
+  </ItemGroup>
+
+</Project>
