@@ -10,6 +10,7 @@ namespace SchoolManagement.Business
         private List<Student> students = new List<Student>();
         private StudentRepository studentRepository;
         private MarksRepository marksRepository;
+        private int studentIdCounter = 1;
 
         public StudentService(string schoolName)
         {
@@ -24,7 +25,8 @@ namespace SchoolManagement.Business
 
         public void AddStudent(string rollNumberInput, string studentName)
         {
-            Student student = new Student(rollNumberInput, studentName);
+            int studentId = GenerateUniqueId();
+            Student student = new Student(studentId,rollNumberInput, studentName);
             studentRepository.AddStudent(student);
         }
 
@@ -67,6 +69,10 @@ namespace SchoolManagement.Business
         public double GetMarks(Student student ,  string subject)
         {
             return marksRepository.GetMarks(student, subject);
+        }
+        private int GenerateUniqueId()
+        {
+            return studentIdCounter++;
         }
     }
 }
