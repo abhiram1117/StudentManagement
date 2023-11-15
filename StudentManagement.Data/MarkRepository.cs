@@ -7,12 +7,19 @@ namespace SchoolManagement.Data
     {
         public void AddMarks(Student student, string subject, double marks)
         {
-            student.Marks[subject] = marks;
-        }
+            var existingMark = student.Marks.FirstOrDefault(m => m.Subject == subject);
 
-        public double GetMarks(Student student, string subject)
-        {
-            return student.Marks.ContainsKey(subject) ? student.Marks[subject] : 0.0;
+            if (existingMark != null)
+            {
+                existingMark.Score = marks;
+            }
+            else
+            {
+                student.Marks.Add(new Mark { Subject = subject, Score = marks });
+            }
         }
     }
+
+        
+
 }

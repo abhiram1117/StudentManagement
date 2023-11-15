@@ -9,9 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bussiness Layer\StudentManagement.Services.csproj" />
-    <ProjectReference Include="..\Data Layer\StudentManagement.Data.csproj" />
-    <ProjectReference Include="..\model\StudentMangement.Models.csproj" />
+    <ProjectReference Include="..\StudentManagement.Model\StudentMangement.Models.csproj" />
+    <ProjectReference Include="..\StudentManagement.Services\StudentManagement.Services.csproj" />
   </ItemGroup>
 
 </Project>

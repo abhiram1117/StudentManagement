@@ -8,7 +8,7 @@ namespace SchoolManagement.Models
         public int Id { get; set; }
         public string RollNumber { get; }
         public string Name { get; }
-        public Dictionary<string, double> Marks { get; } = new Dictionary<string, double>();
+        public List<Mark> Marks { get; set; } = new List<Mark>();
 
         public Student(int id, string rollNumber, string name)
         {
@@ -16,5 +16,12 @@ namespace SchoolManagement.Models
             RollNumber = rollNumber;
             Name = name;
         }
+        
+        
+    }
+    public class Mark
+    {
+        public string Subject { get; set; }
+        public double Score { get; set; }
     }
 }

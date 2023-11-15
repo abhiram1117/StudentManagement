@@ -12,11 +12,11 @@ namespace SchoolManagement.Business
         private List<Student> students = new List<Student>();
         private StudentRepository studentRepository;
         private MarksRepository marksRepository;
-<<<<<<< Updated upstream:StudentManagement.Services/StudentService.cs
+        //<<<<<<< Updated upstream:StudentManagement.Services/StudentService.cs
         private int studentIdCounter = 1;
-=======
+        //=======
         public int StudentIdCounter = 1;
->>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
+        //>>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
 
         public StudentService(string schoolName)
         {
@@ -31,25 +31,22 @@ namespace SchoolManagement.Business
 
         public void AddStudent(string rollNumberInput, string studentName)
         {
-<<<<<<< Updated upstream:StudentManagement.Services/StudentService.cs
-            int studentId = GenerateUniqueId();
-            Student student = new Student(studentId,rollNumberInput, studentName);
-=======
+            
             int id = GenerateUniqueId();
             Student student = new Student(id, rollNumberInput, studentName);
->>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
+            //>>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
             studentRepository.AddStudent(student);
         }
 
         public void AddMarks(string rollNumber, string subject, double marks)
         {
-            
-                Student student = studentRepository.GetStudentByRollNumber(rollNumber);
-                if (student != null)
-                {
-                    marksRepository.AddMarks(student, subject, marks);
-                }
-            
+
+            Student student = studentRepository.GetStudentByRollNumber(rollNumber);
+            if (student != null)
+            {
+                marksRepository.AddMarks(student, subject, marks);
+            }
+
         }
 
         public Student GetStudentByRollNumber(string rollNumber)
@@ -60,9 +57,9 @@ namespace SchoolManagement.Business
         public double CalculateTotalMarks(Student student)
         {
             double total = 0.0;
-            foreach (string subject in studentRepository.GetSubjects())
+            foreach (var mark in student.Marks)
             {
-                total += marksRepository.GetMarks(student, subject);
+                total += mark.Score;
             }
             return total;
         }
@@ -71,25 +68,30 @@ namespace SchoolManagement.Business
         public double CalculatePercentage(Student student)
         {
             double totalMarks = CalculateTotalMarks(student);
-            return (totalMarks / (studentRepository.GetSubjects().Count * 100))*100;
+            return (totalMarks / (studentRepository.GetSubjects().Count * 100)) * 100;
         }
         public List<string> GetSubjects()
         {
             return studentRepository.GetSubjects();
         }
-        public double GetMarks(Student student ,  string subject)
+        public double GetMarks(Student student, string subject)
         {
-            return marksRepository.GetMarks(student, subject);
+            var mark = student.Marks.Find(m => m.Subject == subject);
+            if (mark != null)
+            {
+                return mark.Score;
+            }
+            else
+            {
+                return 0.0;
+            }
         }
-<<<<<<< Updated upstream:StudentManagement.Services/StudentService.cs
-        private int GenerateUniqueId()
-        {
-            return studentIdCounter++;
-=======
+        //<<<<<<< Updated upstream:StudentManagement.Services/StudentService.cs
         public int GenerateUniqueId()
-        {
-            return StudentIdCounter++;
->>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
+            {
+                return StudentIdCounter++;
+                //>>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
+        }
         }
     }
-}
+

@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data Layer\StudentManagement.Data.csproj" />
-    <ProjectReference Include="..\model\StudentMangement.Models.csproj" />
+    <ProjectReference Include="..\StudentManagement.Data\StudentManagement.Data.csproj" />
+    <ProjectReference Include="..\StudentManagement.Model\StudentMangement.Models.csproj" />
   </ItemGroup>
 
 </Project>
