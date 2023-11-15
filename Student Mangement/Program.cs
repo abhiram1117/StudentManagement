@@ -39,15 +39,15 @@ namespace SchoolManagement.Program
                     switch (choice)
                     {
                         case MenuOption.AddStudent:
-                            AddStudent(studentService);
+                            AddStudent();
                             break;
 
                         case MenuOption.AddMarks:
-                            AddMarks(studentService);
+                            AddMarks();
                             break;
 
                         case MenuOption.ShowProgressCard:
-                            ShowProgressCard(studentService);
+                            ShowProgressCard();
                             break;
 
                         case MenuOption.Exit:
@@ -67,12 +67,13 @@ namespace SchoolManagement.Program
             }
         }
                 private static string rollNumber;
-                private static void AddStudent(StudentService studentService)
+                private static StudentService studentService;
+                private static void AddStudent()
                 {
                     Console.WriteLine("Enter Student Roll Number: ");
                     rollNumber = Console.ReadLine();
-                    if (studentService.GetStudents().Any(student => student.RollNumber == rollNumber))
-                    {
+                    if (DataStorage.Students.Exists(student => string.Equals(student.RollNumber, rollNumber)))
+            {
                         Console.WriteLine("Student with the provided roll number already exists.");
                     }
                     else
@@ -85,7 +86,7 @@ namespace SchoolManagement.Program
                     Console.WriteLine();
                 }
 
-                private static void AddMarks(StudentService studentService)
+                private static void AddMarks()
                 {
                     Console.WriteLine("Enter Student Roll Number: ");
                     rollNumber = Console.ReadLine();
@@ -93,12 +94,12 @@ namespace SchoolManagement.Program
 
                     if (student != null)
                     {
-                        foreach (string subject in studentService.GetSubjects())
+                        foreach (Subject subject in studentService.GetSubjects())
                         {
                             double marks;
                             do
                             {
-                                Console.Write($"Enter Marks scored in {subject} : ");
+                                Console.Write($"Enter Marks scored in {subject.SubjectName} : ");
                                 if (double.TryParse(Console.ReadLine(), out marks))
                                 {
                                     if (marks < 0 || marks > 100)
@@ -126,7 +127,7 @@ namespace SchoolManagement.Program
                         Console.WriteLine();
                     }
                 }
-                private static void ShowProgressCard(StudentService studentService)
+                private static void ShowProgressCard()
                 {
                     Console.WriteLine("Enter Student Roll Number: ");
                     string progressCardRollNumber = Console.ReadLine();
@@ -137,7 +138,7 @@ namespace SchoolManagement.Program
                         Console.WriteLine($"Student Name: {progressCardStudent.Name}");
                         Console.WriteLine("Student Marks");
                         Console.WriteLine("----------------------------------------------");
-                        foreach (string subject in studentService.GetSubjects())
+                        foreach (Subject subject in studentService.GetSubjects())
                         {
                             Console.WriteLine($"{subject} : {studentService.GetMarks(progressCardStudent, subject)}");
                         }

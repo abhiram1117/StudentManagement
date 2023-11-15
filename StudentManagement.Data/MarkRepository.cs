@@ -5,9 +5,9 @@ namespace SchoolManagement.Data
 {
     public class MarksRepository
     {
-        public void AddMarks(Student student, string subject, double marks)
+        public void AddMarks(Student student, Subject subject, double marks)
         {
-            var existingMark = student.Marks.FirstOrDefault(m => m.Subject == subject);
+            var existingMark = student.Marks.FirstOrDefault(m => m.Subject.Equals(subject.SubjectName, StringComparison.OrdinalIgnoreCase));
 
             if (existingMark != null)
             {
@@ -15,7 +15,20 @@ namespace SchoolManagement.Data
             }
             else
             {
-                student.Marks.Add(new Mark { Subject = subject, Score = marks });
+                student.Marks.Add(new Mark { Subject = subject.SubjectName, Score = marks });
+            }
+        }
+        public double GetMarks(Student student, Subject subject)
+        {
+
+            var mark = student.Marks.Find(m => m.Subject.Equals(subject.SubjectName, StringComparison.OrdinalIgnoreCase));
+            if (mark != null)
+            {
+                return mark.Score;
+            }
+            else
+            {
+                return 0.0;
             }
         }
     }

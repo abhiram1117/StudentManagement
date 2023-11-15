@@ -12,11 +12,9 @@ namespace SchoolManagement.Business
         private List<Student> students = new List<Student>();
         private StudentRepository studentRepository;
         private MarksRepository marksRepository;
-        //<<<<<<< Updated upstream:StudentManagement.Services/StudentService.cs
-        private int studentIdCounter = 1;
-        //=======
+        
         public int StudentIdCounter = 1;
-        //>>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
+        
 
         public StudentService(string schoolName)
         {
@@ -32,13 +30,12 @@ namespace SchoolManagement.Business
         public void AddStudent(string rollNumberInput, string studentName)
         {
             
-            int id = GenerateUniqueId();
+            Guid id = GenerateUniqueId();
             Student student = new Student(id, rollNumberInput, studentName);
-            //>>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
             studentRepository.AddStudent(student);
         }
 
-        public void AddMarks(string rollNumber, string subject, double marks)
+        public void AddMarks(string rollNumber, Subject subject, double marks)
         {
 
             Student student = studentRepository.GetStudentByRollNumber(rollNumber);
@@ -70,28 +67,19 @@ namespace SchoolManagement.Business
             double totalMarks = CalculateTotalMarks(student);
             return (totalMarks / (studentRepository.GetSubjects().Count * 100)) * 100;
         }
-        public List<string> GetSubjects()
+        public List<Subject> GetSubjects()
         {
             return studentRepository.GetSubjects();
         }
-        public double GetMarks(Student student, string subject)
+        public double GetMarks(Student student, Subject subject)
         {
-            var mark = student.Marks.Find(m => m.Subject == subject);
-            if (mark != null)
-            {
-                return mark.Score;
-            }
-            else
-            {
-                return 0.0;
-            }
+            return marksRepository.GetMarks(student, subject);
         }
-        //<<<<<<< Updated upstream:StudentManagement.Services/StudentService.cs
-        public int GenerateUniqueId()
-            {
-                return StudentIdCounter++;
-                //>>>>>>> Stashed changes:Bussiness Layer/StudentService.cs
+
+        public Guid GenerateUniqueId()
+        {
+            return Guid.NewGuid();
         }
-        }
+    }
     }
 

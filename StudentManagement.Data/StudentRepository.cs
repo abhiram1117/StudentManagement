@@ -11,7 +11,8 @@ namespace SchoolManagement.Data
         {
             public static List<Student> students { get; } = new List<Student>();
             public static List<Mark> Marks { get; } = new List<Mark>();
-            public static List<string> subjects { get; } = new List<string> { "Telugu", "Hindi", "English", "Math", "Science", "Social" };
+            public static List<Subject> subjects = new List<Subject>();
+             
 
         }
         public List<Student> GetStudents()
@@ -27,9 +28,9 @@ namespace SchoolManagement.Data
         {
             DataStorage.students.Add(student);
         }
-        public List<string> GetSubjects()
+        public List<Subject> GetSubjects()
         {
-            return DataStorage.subjects;
+            return DataStorage.subjects.ToList();
         }
     }
 }
