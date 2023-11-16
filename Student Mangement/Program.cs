@@ -1,5 +1,4 @@
-﻿using System;
-using SchoolManagement.Business;
+﻿using SchoolManagement.Business;
 using SchoolManagement.Data;
 using SchoolManagement.Models;
 

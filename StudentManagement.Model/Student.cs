@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SchoolManagement.Models
+﻿namespace SchoolManagement.Models
 {
     public class Student
     {
@@ -20,11 +17,11 @@ namespace SchoolManagement.Models
     public class Mark
     {
         public Guid MarksId { get; set; }
-        public string Subject { get; set; }
+        public Guid SubjectId { get; set; }
         public double Score { get; set; }
-        public Mark(string subject, double score)
+        public Mark(Guid subjectid, double score)
         {            
-            Subject = subject;
+            SubjectId = subjectid;
             Score = score;
         }
     }
@@ -33,8 +30,9 @@ namespace SchoolManagement.Models
     {
         public Guid SubjectId { get; set; }
         public string SubjectName { get; set; }
-        public Subject(string name)
-        {       
+        public Subject(Guid subjectid,string name)
+        {
+            SubjectId = subjectid;
             SubjectName = name;
         }
     }

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SchoolManagement.Models;
-
+﻿using SchoolManagement.Models;
 
 namespace SchoolManagement.Data
 {
@@ -17,7 +14,7 @@ namespace SchoolManagement.Data
         }
         public List<Subject> GetSubjects()
         {
-            return DataStorage.subjects.ToList();
+            return DataStorage.Subjects.ToList();
         }
     }
 }

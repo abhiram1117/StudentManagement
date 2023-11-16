@@ -1,6 +1,5 @@
 ﻿using SchoolManagement.Data;
 using SchoolManagement.Models;
-using System.Collections.Generic;
 
 namespace SchoolManagement.Business
 {

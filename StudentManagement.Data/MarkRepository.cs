@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using SchoolManagement.Models;
+﻿using SchoolManagement.Models;
 
 namespace SchoolManagement.Data
 {
@@ -7,29 +6,30 @@ namespace SchoolManagement.Data
     {
         public void AddMarks(Student student, Subject subject, double marks)
         {
-            var existingMark = student.Marks.FirstOrDefault(m => m.Subject.Equals(subject.SubjectName, StringComparison.OrdinalIgnoreCase));
-
-            if (existingMark != null)
+            Mark existingmark = student.Marks.FirstOrDefault(s =>s.SubjectId .Equals(subject.SubjectId));
+            if (existingmark != null)
             {
-                existingMark.Score = marks;
+                existingmark.Score = marks;
+
             }
             else
             {
-                student.Marks.Add(new Mark (subject.SubjectName, marks));
+                student.Marks.Add(new Mark(Guid.NewGuid(), marks));
             }
-        }
+        }        
+    
 
         public double GetMarks(Student student, Subject subject)
         {
-            var mark = student.Marks.Find(m => m.Subject.Equals(subject.SubjectName, StringComparison.OrdinalIgnoreCase));
-            if (mark != null)
-            {
-                return mark.Score;
-            }
-            else
-            {
-                return 0.0;
-            }
+        Mark existingmark = student.Marks.Find(m => m.SubjectId.Equals(subject.SubjectId));
+        if (existingmark != null)
+        {
+            return existingmark.Score;
+        }
+        else
+        {
+            return 0.0;
+        }
         }
     }
 
