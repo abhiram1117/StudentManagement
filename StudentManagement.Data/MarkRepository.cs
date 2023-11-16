@@ -15,12 +15,12 @@ namespace SchoolManagement.Data
             }
             else
             {
-                student.Marks.Add(new Mark { Subject = subject.SubjectName, Score = marks });
+                student.Marks.Add(new Mark (subject.SubjectName, marks));
             }
         }
+
         public double GetMarks(Student student, Subject subject)
         {
-
             var mark = student.Marks.Find(m => m.Subject.Equals(subject.SubjectName, StringComparison.OrdinalIgnoreCase));
             if (mark != null)
             {

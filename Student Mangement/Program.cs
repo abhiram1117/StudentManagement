@@ -8,21 +8,15 @@ namespace SchoolManagement.Program
 {
     class Program
     {
-        
-
+        private static StudentService studentService = new StudentService("SchoolName");
         static void Main()
-        {
-            
+        {            
             Console.WriteLine("Enter School name: ");
             string schoolName = Console.ReadLine();
-            Console.WriteLine();
-
-            StudentService studentService = new StudentService(schoolName);
-
+            Console.WriteLine();            
             Console.WriteLine($"Welcome to {schoolName} Student information management");
             Console.WriteLine("---------------------------------------------------------------");
             Console.WriteLine();
-
             while (true)
             {
                 Console.WriteLine("Menu Options:");
@@ -32,48 +26,40 @@ namespace SchoolManagement.Program
                 Console.WriteLine("4. Exit");
                 Console.WriteLine();
                 Console.WriteLine("Please select a menu option: ");
-
                 if (Enum.TryParse<MenuOption>(Console.ReadLine(), out MenuOption choice))
-                {
-                    
+                {                    
                     switch (choice)
                     {
                         case MenuOption.AddStudent:
                             AddStudent();
                             break;
-
                         case MenuOption.AddMarks:
                             AddMarks();
                             break;
-
                         case MenuOption.ShowProgressCard:
                             ShowProgressCard();
                             break;
-
                         case MenuOption.Exit:
                             Environment.Exit(0);
                             break;
-
                         default:
                             Console.WriteLine("Invalid choice. Please select a valid option.");
                             break;
                     }
-
                 }
                 else
                 {
                     Console.WriteLine("Invalid menu option. Please select a valid option.");
                 }
             }
-        }
-                private static string rollNumber;
-                private static StudentService studentService;
+        }                
+                
                 private static void AddStudent()
                 {
                     Console.WriteLine("Enter Student Roll Number: ");
-                    rollNumber = Console.ReadLine();
+                    string rollNumber = Console.ReadLine();
                     if (DataStorage.Students.Exists(student => string.Equals(student.RollNumber, rollNumber)))
-            {
+                    {
                         Console.WriteLine("Student with the provided roll number already exists.");
                     }
                     else
@@ -86,48 +72,47 @@ namespace SchoolManagement.Program
                     Console.WriteLine();
                 }
 
-                private static void AddMarks()
+        private static void AddMarks()
+        {
+            Console.WriteLine("Enter Student Roll Number: ");
+            string rollNumber = Console.ReadLine();
+            Student student = studentService.GetStudentByRollNumber(rollNumber);
+            if (student != null)
+            {
+                foreach (Subject subject in studentService.GetSubjects())
                 {
-                    Console.WriteLine("Enter Student Roll Number: ");
-                    rollNumber = Console.ReadLine();
-                    Student student = studentService.GetStudentByRollNumber(rollNumber);
-
-                    if (student != null)
+                    double marks;
+                    do
                     {
-                        foreach (Subject subject in studentService.GetSubjects())
+                        Console.Write($"Enter Marks scored in {subject.SubjectName} : ");
+                        if (double.TryParse(Console.ReadLine(), out marks))
                         {
-                            double marks;
-                            do
+                            if (marks < 0 || marks > 100)
                             {
-                                Console.Write($"Enter Marks scored in {subject.SubjectName} : ");
-                                if (double.TryParse(Console.ReadLine(), out marks))
-                                {
-                                    if (marks < 0 || marks > 100)
-                                    {
-                                        Console.WriteLine("Invalid input for marks. Please enter a valid number between 0 and 100.");
-                                    }
-                                    else
-                                    {
-                                        studentService.AddMarks(rollNumber, subject, marks);
-                                    }
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Invalid input for marks. Please enter a valid number.");
-                                }
-                            } while (marks < 0 || marks > 100);
+                                Console.WriteLine("Invalid input for marks. Please enter a valid number between 0 and 100.");
+                            }
+                            else
+                            {
+                                studentService.AddMarks(rollNumber, subject, marks);
+                            }
                         }
-
-                        Console.WriteLine("Student marks are added successfully");
-                        Console.WriteLine();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Student with the provided roll number not found.");
-                        Console.WriteLine();
-                    }
+                        else
+                        {
+                            Console.WriteLine("Invalid input for marks. Please enter a valid number.");
+                        }
+                    } while (marks < 0 || marks > 100);
                 }
-                private static void ShowProgressCard()
+                Console.WriteLine("Student marks are added successfully");
+                Console.WriteLine();
+            }
+            else
+            {
+                Console.WriteLine("Student with the provided roll number not found.");
+                Console.WriteLine();
+            }
+        }
+
+        private static void ShowProgressCard()
                 {
                     Console.WriteLine("Enter Student Roll Number: ");
                     string progressCardRollNumber = Console.ReadLine();

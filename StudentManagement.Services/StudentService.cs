@@ -2,36 +2,26 @@
 using SchoolManagement.Models;
 using System.Collections.Generic;
 
-
-
 namespace SchoolManagement.Business
 {
     public class StudentService
     {
         private string schoolName;
-        private List<Student> students = new List<Student>();
         private StudentRepository studentRepository;
-        private MarksRepository marksRepository;
-        
-        public int StudentIdCounter = 1;
-        
+        private MarksRepository marksRepository;                
 
         public StudentService(string schoolName)
         {
             this.schoolName = schoolName;
             studentRepository = new StudentRepository();
             marksRepository = new MarksRepository();
-        }
-        public List<Student> GetStudents()
-        {
-            return studentRepository.GetStudents();
-        }
+        }        
 
-        public void AddStudent(string rollNumberInput, string studentName)
+        public void AddStudent(string rollNumber, string studentName)
         {
             
             Guid id = GenerateUniqueId();
-            Student student = new Student(id, rollNumberInput, studentName);
+            Student student = new Student(id, rollNumber, studentName);
             studentRepository.AddStudent(student);
         }
 
@@ -43,7 +33,6 @@ namespace SchoolManagement.Business
             {
                 marksRepository.AddMarks(student, subject, marks);
             }
-
         }
 
         public Student GetStudentByRollNumber(string rollNumber)
@@ -60,7 +49,6 @@ namespace SchoolManagement.Business
             }
             return total;
         }
-
 
         public double CalculatePercentage(Student student)
         {
@@ -82,4 +70,3 @@ namespace SchoolManagement.Business
         }
     }
     }
-
