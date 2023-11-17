@@ -7,11 +7,12 @@ namespace SchoolManagement.Program
 {
     class Program
     {
-        private static StudentService studentService = new StudentService("SchoolName");
+        private static StudentService studentService;
         static void Main()
         {            
             Console.WriteLine("Enter School name: ");
             string schoolName = Console.ReadLine();
+            studentService= new StudentService(schoolName);
             Console.WriteLine();            
             Console.WriteLine($"Welcome to {schoolName} Student information management");
             Console.WriteLine("---------------------------------------------------------------");
