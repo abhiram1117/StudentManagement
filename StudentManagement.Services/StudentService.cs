@@ -1,13 +1,14 @@
-﻿using SchoolManagement.Data;
-using SchoolManagement.Models;
+﻿using StudentManagement.Data;
+using StudentManagement.Models;
 
-namespace SchoolManagement.Business
+namespace StudentManagement.Business
 {
     public class StudentService
     {
         private string schoolName;
         private StudentRepository studentRepository;
-        private MarksRepository marksRepository;                
+        private MarksRepository marksRepository;
+        
 
         public StudentService(string schoolName)
         {
@@ -67,5 +68,6 @@ namespace SchoolManagement.Business
         {
             return Guid.NewGuid();
         }
+        
     }
     }

@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\StudentManagement.Model\StudentMangement.Models.csproj" />
     <ProjectReference Include="..\StudentManagement.Services\StudentManagement.Services.csproj" />
   </ItemGroup>
 

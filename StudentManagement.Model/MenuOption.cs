@@ -1,4 +1,4 @@
-﻿namespace SchoolManagement.Models
+﻿namespace StudentManagement.Models
     {
         public enum MenuOption
         {

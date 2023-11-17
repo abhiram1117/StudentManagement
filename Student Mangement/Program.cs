@@ -1,19 +1,19 @@
-﻿using SchoolManagement.Business;
-using SchoolManagement.Data;
-using SchoolManagement.Models;
+﻿using StudentManagement.Business;
+using StudentManagement.Data;
+using StudentManagement.Models;
+using StudentMangement.Models;
 
-
-namespace SchoolManagement.Program
+namespace StudentManagement.Program
 {
     class Program
     {
         private static StudentService studentService;
         static void Main()
-        {            
+        {
             Console.WriteLine("Enter School name: ");
             string schoolName = Console.ReadLine();
-            studentService= new StudentService(schoolName);
-            Console.WriteLine();            
+            studentService = new StudentService(schoolName);
+            Console.WriteLine();
             Console.WriteLine($"Welcome to {schoolName} Student information management");
             Console.WriteLine("---------------------------------------------------------------");
             Console.WriteLine();
@@ -27,7 +27,7 @@ namespace SchoolManagement.Program
                 Console.WriteLine();
                 Console.WriteLine("Please select a menu option: ");
                 if (Enum.TryParse<MenuOption>(Console.ReadLine(), out MenuOption choice))
-                {                    
+                {
                     switch (choice)
                     {
                         case MenuOption.AddStudent:
@@ -52,25 +52,32 @@ namespace SchoolManagement.Program
                     Console.WriteLine("Invalid menu option. Please select a valid option.");
                 }
             }
-        }                
-                
-                private static void AddStudent()
+        }
+
+        private static void AddStudent()
+        {
+            try
+            {
+                Console.WriteLine("Enter Student Roll Number: ");
+                string rollNumber = Console.ReadLine();
+                if (DataStorage.Students.Exists(student => string.Equals(student.RollNumber, rollNumber)))
                 {
-                    Console.WriteLine("Enter Student Roll Number: ");
-                    string rollNumber = Console.ReadLine();
-                    if (DataStorage.Students.Exists(student => string.Equals(student.RollNumber, rollNumber)))
-                    {
-                        Console.WriteLine("Student with the provided roll number already exists.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Enter Student Name: ");
-                        string studentName = Console.ReadLine();
-                        studentService.AddStudent(rollNumber, studentName);
-                        Console.WriteLine("Student details are added successfully");
-                    }
-                    Console.WriteLine();
+                    throw new StudentAlreadyExistsException();
                 }
+
+                Console.WriteLine("Enter Student Name: ");
+                string studentName = Console.ReadLine();
+                studentService.AddStudent(rollNumber, studentName);
+                Console.WriteLine("Student details are added successfully");
+
+            }
+            catch (StudentAlreadyExistsException ex)
+            { 
+                Console.WriteLine(ex.Message);
+            }
+            Console.WriteLine();
+        }
+
 
         private static void AddMarks()
         {
@@ -113,33 +120,33 @@ namespace SchoolManagement.Program
         }
 
         private static void ShowProgressCard()
+        {
+            Console.WriteLine("Enter Student Roll Number: ");
+            string progressCardRollNumber = Console.ReadLine();
+            Student progressCardStudent = studentService.GetStudentByRollNumber(progressCardRollNumber);
+            if (progressCardStudent != null)
+            {
+                Console.WriteLine($"Student Roll Number: {progressCardRollNumber}");
+                Console.WriteLine($"Student Name: {progressCardStudent.Name}");
+                Console.WriteLine("Student Marks");
+                Console.WriteLine("----------------------------------------------");
+                foreach (Subject subject in studentService.GetSubjects())
                 {
-                    Console.WriteLine("Enter Student Roll Number: ");
-                    string progressCardRollNumber = Console.ReadLine();
-                    Student progressCardStudent = studentService.GetStudentByRollNumber(progressCardRollNumber);
-                    if (progressCardStudent != null)
-                    {
-                        Console.WriteLine($"Student Roll Number: {progressCardRollNumber}");
-                        Console.WriteLine($"Student Name: {progressCardStudent.Name}");
-                        Console.WriteLine("Student Marks");
-                        Console.WriteLine("----------------------------------------------");
-                        foreach (Subject subject in studentService.GetSubjects())
-                        {
-                            Console.WriteLine($"{subject} : {studentService.GetMarks(progressCardStudent, subject)}");
-                        }
-                        Console.WriteLine("----------------------------------------------");
-
-                        double totalMarks = studentService.CalculateTotalMarks(progressCardStudent);
-                        double percentage = studentService.CalculatePercentage(progressCardStudent);
-
-                        Console.WriteLine($"Total Marks: {totalMarks}");
-                        Console.WriteLine($"Percentage: {percentage}%");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Student with the provided roll number not found.");
-                    }
-                    Console.WriteLine();
+                    Console.WriteLine($"{subject} : {studentService.GetMarks(progressCardStudent, subject)}");
                 }
+                Console.WriteLine("----------------------------------------------");
+
+                double totalMarks = studentService.CalculateTotalMarks(progressCardStudent);
+                double percentage = studentService.CalculatePercentage(progressCardStudent);
+
+                Console.WriteLine($"Total Marks: {totalMarks}");
+                Console.WriteLine($"Percentage: {percentage}%");
             }
+            else
+            {
+                Console.WriteLine("Student with the provided roll number not found.");
+            }
+            Console.WriteLine();
         }
+    }
+}

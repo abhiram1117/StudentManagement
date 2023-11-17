@@ -1,6 +1,6 @@
-﻿using SchoolManagement.Models;
+﻿using StudentManagement.Models;
 
-namespace SchoolManagement.Data
+namespace StudentManagement.Data
 {
     public class MarksRepository
     {
