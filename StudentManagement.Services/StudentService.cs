@@ -18,8 +18,7 @@ namespace StudentManagement.Business
         }        
 
         public void AddStudent(string rollNumber, string studentName)
-        {
-            
+        {            
             Guid id = GenerateUniqueId();
             Student student = new Student(id, rollNumber, studentName);
             studentRepository.AddStudent(student);
@@ -27,12 +26,8 @@ namespace StudentManagement.Business
 
         public void AddMarks(string rollNumber, Subject subject, double marks)
         {
-
-            Student student = studentRepository.GetStudentByRollNumber(rollNumber);
-            if (student != null)
-            {
-                marksRepository.AddMarks(student, subject, marks);
-            }
+            Student student = studentRepository.GetStudentByRollNumber(rollNumber);                        
+                marksRepository.AddMarks(student, subject, marks);            
         }
 
         public Student GetStudentByRollNumber(string rollNumber)

@@ -6,7 +6,7 @@ namespace StudentManagement.Data
     {
         public void AddMarks(Student student, Subject subject, double marks)
         {
-            Mark existingmark = student.Marks.FirstOrDefault(s =>s.SubjectId .Equals(subject.SubjectId));
+            Mark existingmark = student.Marks.FirstOrDefault(m =>m.SubjectId.Equals(subject.SubjectId));
             if (existingmark != null)
             {
                 existingmark.Score = marks;
@@ -14,7 +14,7 @@ namespace StudentManagement.Data
             }
             else
             {
-                student.Marks.Add(new Mark(Guid.NewGuid(), marks));
+                student.Marks.Add(new Mark(subject.SubjectId, marks));
             }
         }        
     
@@ -25,10 +25,11 @@ namespace StudentManagement.Data
         if (existingmark != null)
         {
             return existingmark.Score;
+
         }
         else
         {
-            return 0.0;
+            return 0;
         }
         }
     }

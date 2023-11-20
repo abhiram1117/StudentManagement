@@ -132,7 +132,8 @@ namespace StudentManagement.Program
                 Console.WriteLine("----------------------------------------------");
                 foreach (Subject subject in studentService.GetSubjects())
                 {
-                    Console.WriteLine($"{subject} : {studentService.GetMarks(progressCardStudent, subject)}");
+                    
+                    Console.WriteLine($"{subject.SubjectName} : {studentService.GetMarks(progressCardStudent, subject)}");
                 }
                 Console.WriteLine("----------------------------------------------");
 
